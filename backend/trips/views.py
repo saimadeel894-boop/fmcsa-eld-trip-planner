@@ -25,8 +25,7 @@ def geocode(location: str) -> dict:
     return None
 
 
-def haversine_miles(origin: dict, destination: dict) -> float:
-    """Straight-line distance fallback."""
+def haversine_miles(origin, destination):
     lat1 = math.radians(origin['lat'])
     lat2 = math.radians(destination['lat'])
     dlat = lat2 - lat1
@@ -34,8 +33,7 @@ def haversine_miles(origin: dict, destination: dict) -> float:
     a = math.sin(dlat/2)**2 + math.cos(lat1)*math.cos(lat2)*math.sin(dlon/2)**2
     return 3956 * 2 * math.asin(math.sqrt(a)) * 1.15
 
-
-def get_route(origin: dict, destination: dict):
+def get_route(origin, destination):
     try:
         coords = f"{origin['lon']},{origin['lat']};{destination['lon']},{destination['lat']}"
         resp = requests.get(
@@ -52,11 +50,8 @@ def get_route(origin: dict, destination: dict):
             }
     except Exception:
         pass
-
-    # Fallback: straight line
-    miles = haversine_miles(origin, destination)
     return {
-        "distance_miles": miles,
+        "distance_miles": haversine_miles(origin, destination),
         "geometry": [
             [origin['lon'], origin['lat']],
             [destination['lon'], destination['lat']],
