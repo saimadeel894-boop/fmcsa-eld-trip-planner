@@ -1,4 +1,5 @@
 import requests
+import math
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -24,13 +25,23 @@ def geocode(location: str) -> dict:
     return None
 
 
+def haversine_miles(origin: dict, destination: dict) -> float:
+    """Straight-line distance fallback."""
+    lat1 = math.radians(origin['lat'])
+    lat2 = math.radians(destination['lat'])
+    dlat = lat2 - lat1
+    dlon = math.radians(destination['lon'] - origin['lon'])
+    a = math.sin(dlat/2)**2 + math.cos(lat1)*math.cos(lat2)*math.sin(dlon/2)**2
+    return 3956 * 2 * math.asin(math.sqrt(a)) * 1.15
+
+
 def get_route(origin: dict, destination: dict):
     try:
         coords = f"{origin['lon']},{origin['lat']};{destination['lon']},{destination['lat']}"
         resp = requests.get(
             f"{OSRM_URL}/{coords}",
             params={"overview": "full", "geometries": "geojson"},
-            timeout=15,
+            timeout=10,
         )
         data = resp.json()
         if data.get("code") == "Ok":
@@ -41,7 +52,16 @@ def get_route(origin: dict, destination: dict):
             }
     except Exception:
         pass
-    return None
+
+    # Fallback: straight line
+    miles = haversine_miles(origin, destination)
+    return {
+        "distance_miles": miles,
+        "geometry": [
+            [origin['lon'], origin['lat']],
+            [destination['lon'], destination['lat']],
+        ],
+    }
 
 
 class PlanTripView(APIView):
@@ -76,8 +96,7 @@ class PlanTripView(APIView):
         route_to_pickup = get_route(geo_current, geo_pickup)
         route_main = get_route(geo_pickup, geo_dropoff)
 
-        if not route_main:
-            return Response({"error": "Cannot calculate route"}, status=400)
+        # Fallback guaranteed by get_route now
 
         dist_to_pickup = route_to_pickup["distance_miles"] if route_to_pickup else 0.0
         dist_main = route_main["distance_miles"]
