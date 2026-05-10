@@ -51,17 +51,17 @@ export default function App() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f5f5f4", fontFamily: "'Courier New', monospace" }}>
+    <div style={{ minHeight: "100vh", background: "#f5f5f4", fontFamily: "'Inter', sans-serif" }}>
       {/* Header */}
-      <header style={{ background: "#1c1917", color: "#fafaf9", padding: "16px 24px", display: "flex", alignItems: "center", gap: 12 }}>
-        <div style={{ fontSize: 22, fontWeight: "bold", letterSpacing: 2 }}>⏱ ELD TRIP PLANNER</div>
-        <div style={{ fontSize: 11, color: "#a8a29e", marginLeft: "auto" }}>FMCSA HOS Compliant · 70hr/8-day · Property Carrier</div>
+      <header style={{ background: "#1c1917", color: "#fafaf9", padding: "20px 24px", display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 24, fontWeight: "bold", letterSpacing: 1 }}>⏱ ELD TRIP PLANNER</div>
+        <div style={{ fontSize: 13, color: "#a8a29e", marginLeft: "auto", fontWeight: 600 }}>FMCSA HOS Compliant · 70hr/8-day · Property Carrier</div>
       </header>
 
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "24px 16px" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 16px" }}>
         {/* Input Form */}
-        <div style={{ background: "#fff", border: "2px solid #1c1917", borderRadius: 8, padding: 24, marginBottom: 24 }}>
-          <div style={{ fontSize: 13, fontWeight: "bold", color: "#1c1917", marginBottom: 16, letterSpacing: 1 }}>
+        <div style={{ background: "#fff", border: "1px solid #e7e5e4", boxShadow: "0 4px 24px rgba(0,0,0,0.08)", borderRadius: 12, padding: 32, marginBottom: 32 }}>
+          <div style={{ fontSize: 15, fontWeight: "bold", color: "#1c1917", marginBottom: 20, letterSpacing: 1 }}>
             TRIP DETAILS
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
@@ -72,7 +72,7 @@ export default function App() {
               { key: "current_cycle_used", label: "CYCLE HOURS USED (0–70)", placeholder: "20", type: "number" },
             ].map(({ key, label, placeholder, type }) => (
               <div key={key}>
-                <label style={{ fontSize: 10, color: "#78716c", display: "block", marginBottom: 4, letterSpacing: 1 }}>
+                <label style={{ fontSize: 12, fontWeight: 600, color: "#544f4d", display: "block", marginBottom: 6, letterSpacing: 1 }}>
                   {label}
                 </label>
                 <input
@@ -84,14 +84,15 @@ export default function App() {
                   max={type === "number" ? 70 : undefined}
                   style={{
                     width: "100%",
-                    padding: "10px 12px",
+                    padding: "14px",
                     border: "1.5px solid #d6d3d1",
-                    borderRadius: 4,
-                    fontSize: 13,
-                    fontFamily: "'Courier New', monospace",
+                    borderRadius: 8,
+                    fontSize: 14,
+                    fontFamily: "'Inter', sans-serif",
                     background: "#fafaf9",
                     boxSizing: "border-box",
                     outline: "none",
+                    transition: "border-color 0.2s",
                   }}
                   onFocus={(e) => (e.target.style.borderColor = "#1c1917")}
                   onBlur={(e) => (e.target.style.borderColor = "#d6d3d1")}
@@ -104,13 +105,14 @@ export default function App() {
             onClick={handleSubmit}
             disabled={loading}
             style={{
-              marginTop: 20,
+              marginTop: 24,
+              width: "100%",
               background: loading ? "#78716c" : "#1c1917",
               color: "#fafaf9",
               border: "none",
-              borderRadius: 4,
-              padding: "12px 28px",
-              fontSize: 13,
+              borderRadius: 8,
+              padding: "16px 28px",
+              fontSize: 15,
               fontWeight: "bold",
               letterSpacing: 1,
               cursor: loading ? "not-allowed" : "pointer",
@@ -130,16 +132,16 @@ export default function App() {
         {result && (
           <>
             {/* Summary Cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginBottom: 32 }}>
               {[
                 { label: "TOTAL DISTANCE", value: `${result.trip.total_distance_miles.toFixed(0)} mi` },
                 { label: "TOTAL DRIVE TIME", value: `${result.trip.total_driving_hours.toFixed(1)} hrs` },
                 { label: "DAYS ON ROAD", value: `${result.trip.days.length}` },
                 { label: "CYCLE USED (FINAL)", value: `${result.trip.cycle_hours_used_final.toFixed(1)} / 70 hrs` },
               ].map(({ label, value }) => (
-                <div key={label} style={{ background: "#1c1917", color: "#fafaf9", borderRadius: 6, padding: "16px 12px" }}>
-                  <div style={{ fontSize: 9, color: "#a8a29e", letterSpacing: 1, marginBottom: 6 }}>{label}</div>
-                  <div style={{ fontSize: 20, fontWeight: "bold" }}>{value}</div>
+                <div key={label} style={{ background: "#fff", border: "1px solid #e7e5e4", borderLeft: "4px solid #1c1917", color: "#1c1917", borderRadius: 8, padding: "20px 16px", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+                  <div style={{ fontSize: 11, color: "#78716c", letterSpacing: 1, marginBottom: 8, fontWeight: 600 }}>{label}</div>
+                  <div style={{ fontSize: 24, fontWeight: "bold" }}>{value}</div>
                 </div>
               ))}
             </div>
@@ -153,8 +155,8 @@ export default function App() {
             )}
 
             {/* Map */}
-            <div style={{ background: "#fff", border: "2px solid #1c1917", borderRadius: 8, padding: 16, marginBottom: 24 }}>
-              <div style={{ fontSize: 12, fontWeight: "bold", color: "#1c1917", marginBottom: 12, letterSpacing: 1 }}>
+            <div style={{ background: "#fff", border: "1px solid #e7e5e4", boxShadow: "0 4px 24px rgba(0,0,0,0.04)", borderRadius: 12, padding: 24, marginBottom: 32 }}>
+              <div style={{ fontSize: 15, fontWeight: "bold", color: "#1c1917", marginBottom: 16, letterSpacing: 1 }}>
                 ROUTE MAP
               </div>
               <TripMap
@@ -179,11 +181,11 @@ export default function App() {
             </div>
 
             {/* Stops Summary */}
-            <div style={{ background: "#fff", border: "2px solid #1c1917", borderRadius: 8, padding: 16, marginBottom: 24 }}>
-              <div style={{ fontSize: 12, fontWeight: "bold", color: "#1c1917", marginBottom: 12, letterSpacing: 1 }}>
+            <div style={{ background: "#fff", border: "1px solid #e7e5e4", boxShadow: "0 4px 24px rgba(0,0,0,0.04)", borderRadius: 12, padding: 24, marginBottom: 32 }}>
+              <div style={{ fontSize: 15, fontWeight: "bold", color: "#1c1917", marginBottom: 16, letterSpacing: 1 }}>
                 TRIP STOPS & EVENTS
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 {result.trip.stops.map((stop, i) => (
                   <div key={i} style={{
                     display: "flex", alignItems: "center", gap: 12,
@@ -209,8 +211,8 @@ export default function App() {
             </div>
 
             {/* ELD Log Sheets */}
-            <div style={{ background: "#fff", border: "2px solid #1c1917", borderRadius: 8, padding: 16 }}>
-              <div style={{ fontSize: 12, fontWeight: "bold", color: "#1c1917", marginBottom: 12, letterSpacing: 1 }}>
+            <div style={{ background: "#fff", border: "1px solid #e7e5e4", boxShadow: "0 4px 24px rgba(0,0,0,0.04)", borderRadius: 12, padding: 24 }}>
+              <div style={{ fontSize: 15, fontWeight: "bold", color: "#1c1917", marginBottom: 16, letterSpacing: 1 }}>
                 ELD DAILY LOG SHEETS
               </div>
 
@@ -221,15 +223,15 @@ export default function App() {
                     key={i}
                     onClick={() => setActiveDay(i)}
                     style={{
-                      padding: "6px 14px",
+                      padding: "8px 16px",
                       border: "1.5px solid #1c1917",
-                      borderRadius: 4,
+                      borderRadius: 6,
                       background: activeDay === i ? "#1c1917" : "#fff",
                       color: activeDay === i ? "#fafaf9" : "#1c1917",
-                      fontSize: 11,
-                      fontFamily: "'Courier New', monospace",
+                      fontSize: 13,
+                      fontFamily: "'Inter', sans-serif",
                       cursor: "pointer",
-                      fontWeight: activeDay === i ? "bold" : "normal",
+                      fontWeight: activeDay === i ? "600" : "400",
                     }}
                   >
                     {day.date_label}
