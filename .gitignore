@@ -1,0 +1,69 @@
+# ─── Python / Django (backend) ───────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# ─── Node / React (frontend) ─────────────────────────────────────────────────
+node_modules/
+frontend/node_modules/
+
+# Build output
+dist/
+build/
+*.local
+
+# Vite / TypeScript cache
+.vite/
+tsconfig.tsbuildinfo
+
+# ─── Environment & Secrets ───────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.env
+
+# ─── OS / Editor ─────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# ─── Deployment artifacts ────────────────────────────────────────────────────
+staticfiles/
+whitenoise_storage/
