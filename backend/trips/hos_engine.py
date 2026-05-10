@@ -166,7 +166,7 @@ def plan_trip(
 
         while remaining_miles > 0.001:
             # Check cycle
-            if cycle_used >= MAX_CYCLE:
+            if cycle_used >= MAX_CYCLE - 0.5:
                 warnings.append(f"Cycle limit hit at mile mark. 34-hr restart needed.")
                 break
 

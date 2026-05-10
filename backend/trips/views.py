@@ -13,7 +13,7 @@ def geocode(location: str) -> dict:
     try:
         resp = requests.get(
             NOMINATIM_URL,
-            params={"q": location, "format": "json", "limit": 1},
+            params={"q": location, "format": "json", "limit": 1, "countrycodes": "us"},
             headers={"User-Agent": "ELD-Planner/1.0"},
             timeout=10,
         )
