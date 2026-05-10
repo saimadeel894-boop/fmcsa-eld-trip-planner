@@ -189,6 +189,8 @@ Click **PLAN TRIP →** — expected result: interactive map with route, trip st
 | Variable | Description | Example |
 |---|---|---|
 | `VITE_API_URL` | Backend API base URL | `http://localhost:8000` |
+| `VITE_MAP_API_KEY` | Google Maps API Key | `your_map_api_key_here` |
+
 
 > ⚠️ **Never commit `.env` files.** Use `.env.example` as a template.
 
